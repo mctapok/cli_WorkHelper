@@ -1,10 +1,11 @@
-#include <iostream>
+п»ї#include <iostream>
 #include <random>
 #include <iomanip>
 #include <fstream>
 #include <string>
 #include <sstream>
 #include <regex>
+//update encoding utf-8
 
 int generateRandomNumber(int min_value, int max_value) {
 	std::random_device rd;
@@ -13,9 +14,9 @@ int generateRandomNumber(int min_value, int max_value) {
 	return dis(gen);
 }
 void programMenu() {
-	std::cout << "1 прочитать данные из файла ?\n";
-	std::cout << "2 заполнить данные вручную ?\n";
-	std::cout << "q выход\n";
+	std::cout << "1 РїСЂРѕС‡РёС‚Р°С‚СЊ РґР°РЅРЅС‹Рµ РёР· С„Р°Р№Р»Р° ?\n";
+	std::cout << "2 Р·Р°РїРѕР»РЅРёС‚СЊ РґР°РЅРЅС‹Рµ РІСЂСѓС‡РЅСѓСЋ ?\n";
+	std::cout << "q РІС‹С…РѕРґ\n";
 }
 
 
@@ -33,7 +34,7 @@ int regexVerify(std::string input) {
 		return 4;
 	}
 	else {
-		std::cout << "некорректный вид строки" << std::endl;
+		std::cout << "РЅРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ РІРёРґ СЃС‚СЂРѕРєРё" << std::endl;
 	}
 }
 
@@ -74,29 +75,15 @@ int main() {
 		programMenu();
 		std::cin >> optionMenu;
 
-		/*while (!std::cin) {
-			std::cin.clear();
-			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			system("cls");
-			programMenu();
-			std::cout << "Option: ";
-			std::cout << "Please enter a number, not a letter, you fuckwit: " << std::endl;
-			std::cin >> optionMenu;
-		}*/
 		if (optionMenu == '1') {
-			/*std::cout << "введите путь к файлу: ";
-			std::cin >> filePath;*/
 			std::ifstream myFile;
-			//myFile.open(filePath);
-
-			/*myFile.open("someText.txt", std::ios::in)*/; //read file
 			while (optionMenu != 'n') {
-				std::cout << "введите путь к файлу: ";
+				std::cout << "РІРІРµРґРёС‚Рµ РїСѓС‚СЊ Рє С„Р°Р№Р»Сѓ: ";
 				std::cin >> filePath;
 				myFile.open(filePath);
 				if (!myFile.is_open()) {
-					std::cerr << "Не удалось открыть файл " << filePath << std::endl;
-					std::cout << "хотите попробовать снова ? (y/n) ";
+					std::cerr << "РќРµ СѓРґР°Р»РѕСЃСЊ РѕС‚РєСЂС‹С‚СЊ С„Р°Р№Р» " << filePath << std::endl;
+					std::cout << "С…РѕС‚РёС‚Рµ РїРѕРїСЂРѕР±РѕРІР°С‚СЊ СЃРЅРѕРІР° ? (y/n) ";
 					std::cin >> optionMenu;
 				}
 				else break;		
@@ -104,18 +91,18 @@ int main() {
 
 			std::string line;
 
-			int automaticCurrent;//ток выключателя в файле
-			int polusCount; //число полюсов
-			int triggerCurrent;//ток кз
+			int automaticCurrent;//С‚РѕРє РІС‹РєР»СЋС‡Р°С‚РµР»СЏ РІ С„Р°Р№Р»Рµ
+			int polusCount; //С‡РёСЃР»Рѕ РїРѕР»СЋСЃРѕРІ
+			int triggerCurrent;//С‚РѕРє РєР·
 
-			std::string lastString = "0.0 0.0 0.0 0 0 0\n"; //строка выведеная в консоль
+			std::string lastString = "0.0 0.0 0.0 0 0 0\n"; //СЃС‚СЂРѕРєР° РІС‹РІРµРґРµРЅР°СЏ РІ РєРѕРЅСЃРѕР»СЊ
 			int typeOfString;
 
 			while (std::getline(myFile, line)) {
 				std::istringstream iss(line);
 				std::string firstPart, secondPart, thirdPart;
 
-				// Извлекаем части из строки
+				// РР·РІР»РµРєР°РµРј С‡Р°СЃС‚Рё РёР· СЃС‚СЂРѕРєРё
 				if (std::getline(iss, firstPart, '-') &&
 					std::getline(iss, secondPart, ' ') &&
 					std::getline(iss, thirdPart)) {
@@ -124,29 +111,29 @@ int main() {
 						polusCount = std::stoi(thirdPart);
 					}
 					catch (const std::invalid_argument& e) {
-						std::cerr << "Ошибка: Некорректный формат чисел" << std::endl;
+						std::cerr << "РћС€РёР±РєР°: РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ С„РѕСЂРјР°С‚ С‡РёСЃРµР»" << std::endl;
 					}
 				}
 				else {
-					std::cerr << "Ошибка: Не удалось извлечь части из строки" << std::endl;
+					std::cerr << "РћС€РёР±РєР°: РќРµ СѓРґР°Р»РѕСЃСЊ РёР·РІР»РµС‡СЊ С‡Р°СЃС‚Рё РёР· СЃС‚СЂРѕРєРё" << std::endl;
 				}
 				/*
-					triggerCurrent это значение тока, для генерации разных чисел требуется диапазон значений
+					triggerCurrent СЌС‚Рѕ Р·РЅР°С‡РµРЅРёРµ С‚РѕРєР°, РґР»СЏ РіРµРЅРµСЂР°С†РёРё СЂР°Р·РЅС‹С… С‡РёСЃРµР» С‚СЂРµР±СѓРµС‚СЃСЏ РґРёР°РїР°Р·РѕРЅ Р·РЅР°С‡РµРЅРёР№
 
-					для задачи диапазона будем использовать формулу
+					РґР»СЏ Р·Р°РґР°С‡Рё РґРёР°РїР°Р·РѕРЅР° Р±СѓРґРµРј РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ С„РѕСЂРјСѓР»Сѓ
 					min_range = triggerCurrent - (triggerCurrent * 0.3),
 					max_range = triggerCurrent + (triggerCurrent * 0.3)
 				*/
 
-				triggerCurrent = automaticCurrent * generateRandomNumber(3, 6); //вычислили ток кз
+				triggerCurrent = automaticCurrent * generateRandomNumber(3, 6); //РІС‹С‡РёСЃР»РёР»Рё С‚РѕРє РєР·
 
-				//установили диапазон
+				//СѓСЃС‚Р°РЅРѕРІРёР»Рё РґРёР°РїР°Р·РѕРЅ
 				min_range = triggerCurrent - (triggerCurrent * 0.3);
 				max_range = triggerCurrent + (triggerCurrent * 0.3);
 
-				//создали набор
+				//СЃРѕР·РґР°Р»Рё РЅР°Р±РѕСЂ
 				NumberSet set = generateNumberSet(min_range, max_range);
-				std::stringstream capturedStream;//поток вывода в консоль
+				std::stringstream capturedStream;//РїРѕС‚РѕРє РІС‹РІРѕРґР° РІ РєРѕРЅСЃРѕР»СЊ
 
 				if (polusCount == 3) {
 					std::cout
@@ -189,33 +176,39 @@ int main() {
 						lastString = capturedStream.str();
 					}
 					else {
-						std::cout << "Строка не соответствует ни одному виду." << std::endl;
+						std::cout << "РЎС‚СЂРѕРєР° РЅРµ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ РЅРё РѕРґРЅРѕРјСѓ РІРёРґСѓ." << std::endl;
 					}
 				}
 			}
 			myFile.close();
-			std::cout << "Чтобы начать сначала нажмите любую клавишу\nдля выхода нажмите 'q' ";
+			std::cout << "Р§С‚РѕР±С‹ РЅР°С‡Р°С‚СЊ СЃРЅР°С‡Р°Р»Р° РЅР°Р¶РјРёС‚Рµ Р»СЋР±СѓСЋ РєР»Р°РІРёС€Сѓ\nРґР»СЏ РІС‹С…РѕРґР° РЅР°Р¶РјРёС‚Рµ 'q' ";
 			std::cin >> optionMenu;
 		}
 		else if (optionMenu == '2') {
-			std::cout << "Введите минимальное значение диапазона: ";
+			std::cout << "Р’РІРµРґРёС‚Рµ РјРёРЅРёРјР°Р»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ РґРёР°РїР°Р·РѕРЅР°: ";
 			while (!(std::cin >> min_range)) {
-				std::cout << "Ошибка! Введите корректное значение: ";
+				std::cout << "РћС€РёР±РєР°! Р’РІРµРґРёС‚Рµ РєРѕСЂСЂРµРєС‚РЅРѕРµ Р·РЅР°С‡РµРЅРёРµ: ";
 				std::cin.clear();
 				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			}
-			std::cout << "Введите максимальное значение диапазона: ";
+			std::cout << "Р’РІРµРґРёС‚Рµ РјР°РєСЃРёРјР°Р»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ РґРёР°РїР°Р·РѕРЅР°: ";
 			while (!(std::cin >> max_range) || max_range <= min_range) {
-				std::cout << "Ошибка! Введите корректное значение, больше " << min_range << ": ";
+				std::cout << "РћС€РёР±РєР°! Р’РІРµРґРёС‚Рµ РєРѕСЂСЂРµРєС‚РЅРѕРµ Р·РЅР°С‡РµРЅРёРµ, Р±РѕР»СЊС€Рµ " << min_range << ": ";
 				std::cin.clear();
 				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			}
-			std::cout << "Введите количество наборов чисел: ";
-			std::cin >> num_count;
-
-			std::cout << "однофазный проводник (y/n)? ";
-			std::cin >> conductor;
-
+			std::cout << "Р’РІРµРґРёС‚Рµ РєРѕР»РёС‡РµСЃС‚РІРѕ РЅР°Р±РѕСЂРѕРІ С‡РёСЃРµР»: ";
+			while (!(std::cin >> num_count)) {
+				std::cout << "РћС€РёР±РєР°! Р’РІРµРґРёС‚Рµ РєРѕСЂСЂРµРєС‚РЅРѕРµ Р·РЅР°С‡РµРЅРёРµ: ";
+				std::cin.clear();
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			}
+			std::cout << "РѕРґРЅРѕС„Р°Р·РЅС‹Р№ РїСЂРѕРІРѕРґРЅРёРє (y/n)? ";
+			while (!(std::cin >> conductor)) {
+				std::cout << "РћС€РёР±РєР°! Р’РІРµРґРёС‚Рµ РєРѕСЂСЂРµРєС‚РЅРѕРµ Р·РЅР°С‡РµРЅРёРµ: ";
+				std::cin.clear();
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			}
 
 			std::random_device rd;
 			std::mt19937 gen(rd());
@@ -254,12 +247,12 @@ int main() {
 				}
 				std::cin.clear();
 				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-				std::cout << "Хотите сгенерировать еще с заданными параметрами (y/n)? ";
+				std::cout << "РҐРѕС‚РёС‚Рµ СЃРіРµРЅРµСЂРёСЂРѕРІР°С‚СЊ РµС‰Рµ СЃ Р·Р°РґР°РЅРЅС‹РјРё РїР°СЂР°РјРµС‚СЂР°РјРё (y/n)? ";
 				std::cin >> repeat;
 			} while (repeat == 'y' || repeat == 'Y');
 		}
 		else break;
 	} while (optionMenu != 'Q' && optionMenu != 'q');
-	std::cout << "Программа завершена." << std::endl;
+	std::cout << "РџСЂРѕРіСЂР°РјРјР° Р·Р°РІРµСЂС€РµРЅР°." << std::endl;
 	return 0;
 }
